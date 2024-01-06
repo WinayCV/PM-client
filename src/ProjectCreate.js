@@ -26,9 +26,12 @@ const ProjectCreate = ({getPost}) => {
     if (Object.keys(runValidation()).length === 0) {
       try {
         // await axios.post('http://localhost:5000/projects', {
-        await axios.post('https://projects-r5nz.onrender.com', {
-          form,
-        });
+        await axios.post(
+          'https://projects-r5nz.onrender.com/projects',
+          {
+            form,
+          }
+        );
         getPost();
         setForm({title: '', startDate: ''});
         setErrors({});

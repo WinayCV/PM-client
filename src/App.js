@@ -10,7 +10,9 @@ const App = () => {
   const fetchPosts = async () => {
     try {
       // const res = await axios.get('http://localhost:5002/projects');
-      const res = await axios.get('https://query-u1ze.onrender.com');
+      const res = await axios.get(
+        'https://query-u1ze.onrender.com/projects'
+      );
 
       setProjects(res.data);
     } catch (error) {
