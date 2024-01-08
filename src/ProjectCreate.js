@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 const ProjectCreate = ({getPost}) => {
   const [form, setForm] = useState({title: '', startDate: ''});
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const formErrors = {};
   const runValidation = () => {
     if (form.title === '') {
@@ -22,8 +23,8 @@ const ProjectCreate = ({getPost}) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (Object.keys(runValidation()).length === 0) {
+      setLoading(true);
       try {
         // await axios.post('http://localhost:5000/projects', {
         await axios.post(
@@ -35,6 +36,7 @@ const ProjectCreate = ({getPost}) => {
         getPost();
         setForm({title: '', startDate: ''});
         setErrors({});
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -80,9 +82,15 @@ const ProjectCreate = ({getPost}) => {
           </div>
         </div>
 
-        <div className=" offset-sm-1">
-          <button className="btn btn-primary">Submit</button>
-        </div>
+        {loading ? (
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <div className=" offset-sm-1">
+            <button className="btn btn-primary">Submit</button>
+          </div>
+        )}
       </form>
     </div>
   );

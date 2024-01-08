@@ -20,6 +20,7 @@ const App = () => {
     }
   };
   const getPost = () => {
+    console.log('get project');
     fetchPosts();
   };
   console.log(projects);

@@ -6,6 +6,7 @@ const TaskCreate = ({projectId, projectStartDate, getPost}) => {
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const formErrors = {};
   const runValidation = () => {
@@ -26,7 +27,7 @@ const TaskCreate = ({projectId, projectStartDate, getPost}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (Object.keys(runValidation()).length === 0) {
-      console.log(form);
+      setLoading(true);
       try {
         await axios.post(
           // `http://localhost:5001/projects/${projectId}/tasks`,
@@ -36,8 +37,8 @@ const TaskCreate = ({projectId, projectStartDate, getPost}) => {
           }
         );
         getPost();
-
         setForm({content: '', dueDate: ''});
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -75,7 +76,13 @@ const TaskCreate = ({projectId, projectStartDate, getPost}) => {
             )}
           </div>
         </div>
-        <button className="btn btn-primary">Submit</button>
+        {loading ? (
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <button className="btn btn-primary">Submit</button>
+        )}
       </form>
     </div>
   );
